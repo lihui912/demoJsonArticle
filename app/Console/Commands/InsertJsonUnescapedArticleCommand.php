@@ -2,25 +2,24 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Article;
+use App\Models\JsonUnescapedArticle;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
-class InsertArticleCommand extends Command
+class InsertJsonUnescapedArticleCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'article:insert';
+    protected $signature = 'jsonArticle:insertUnescaped';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Insert article';
+    protected $description = 'Insert unescaped JSON article';
 
     /**
      * Execute the console command.
@@ -29,16 +28,15 @@ class InsertArticleCommand extends Command
      */
     public function handle()
     {
-        $title = '标题' . Str::random(10);
-        $content = '内容';
+        $title = '标题';
+        $data = ['title' => $title, 'content' => '内容'];
 
-        $article = new Article([
+        $jsonUnescaped = new JsonUnescapedArticle([
             'title' => $title,
-            'body' => $content,
-            'slug' => Str::of($title)->slug('-', 'zh'),
+            'data' => $data,
         ]);
 
-        $article->save();
+        $jsonUnescaped->save();
 
         return 0;
     }
